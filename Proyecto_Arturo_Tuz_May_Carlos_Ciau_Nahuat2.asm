@@ -57,7 +57,7 @@
             
             cmp num, 35h         ;Compara si el numero es "5"
             jnz multi3           ;Hace un salto si el numero no es "5"
-            call salir           ;Se es "5" se llama a la funcion 
+            call salir           ;Si es "5" se llama a la funcion 
                                  ;para finalizar del programa
     
             multi3:
@@ -77,15 +77,15 @@
                 
         muestra macro al
                             
-            aam                  ;ajusta el valor en AL por: 
+            aam                  ;ajusta el valor en AL por el resultado
         
-            mov uni,al           ; Respaldo 4 en unidades
+            mov uni,al           ; Respaldo en unidades
             mov al,ah            ;muevo lo que tengo en AH a AL para poder volver
                                  ; a separar los numeros
             aam                  ; separa lo qe hay en AL
-            mov cen,ah           ;respaldo las centenas en cen en este caso 2
+            mov cen,ah           ;respaldo las centenas en cen
                         
-            mov dece,al          ;respaldo las decenas en dec, en este caso 3
+            mov dece,al          ;respaldo las decenas en dec
             
             mov ah, 09h
         	lea dx, Msg7
