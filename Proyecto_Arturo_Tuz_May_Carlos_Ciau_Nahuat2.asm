@@ -1,3 +1,115 @@
+;GENERACION DE CODIGO OBJETO
+;PROGRAMA INFORMATICO, OPERACIONES BASICAS (SUMA, RESTA, MUTIPLICACION Y DIVISION)
+
+;Sexto semestre Grupo "A"
+;Alumnos:                              
+    ;Manuel Arturo Tuz May
+    ;Carlos Daniel Ciau Nahuat
+
+
+
+
+        ciclo macro num          ;Ciclo que toma el valor y lo compara
+ 
+             cmp num, 31h        ;Compara el numero ingresado con el "1"
+             jnz res             ;Hace un salto si el numero no es "1"
+             call SUMA           ;Si es "1" llama a la funcion creada
+
+             res:                ;Espacio que espera el salto
+             ciclo1 num          ;Se traslada el valor a un nuevo ciclo
+        endm     
+        
+
+        ciclo1 macro num
+ 
+             cmp num, 32h        ;Compara el numero ingresado con el "2"
+             jnz mult            ;Hace un salto si el numero no es "2"
+             call RESTA          ;Si es "2" llama a la funcion creada
+ 
+             mult:               ;Espacio que espera el salto
+             ciclo2 num          ;Se llama a la macro para finalizar el programa
+        endm   
+        
+
+        ciclo2 macro num
+ 
+             cmp num, 33h        ;Compara el numero ingresado con el "3"
+             jnz divs            ;Hace un salto si el numero no es "3"
+             call MULTI          ;Si es "3" llama a la funcion creada
+ 
+             divs:               ;Espacio que espera el salto
+             ciclo3 num          ;Se llama a la macro para finalizar el programa
+        endm
+
+        ciclo3 macro num
+ 
+            cmp num, 34h         ;Compara el numero ingresado con el "4"
+            jnz salirr           ;Hace un salto si el numero no es "4"
+            call DIVI            ;Si es "4" llama a la funcion creada
+ 
+        salirr:                  ;Espacio que espera el salto     
+        
+            ciclofin num         ;Se llama a la macro para finalizar el programa 
+            
+        endm
+
+        ciclofin macro num                       
+            
+            cmp num, 35h         ;Compara si el numero es "5"
+            jnz multi3           ;Hace un salto si el numero no es "5"
+            call salir           ;Se es "5" se llama a la funcion 
+                                 ;para finalizar del programa
+    
+            multi3:
+         
+            mov ah,00h           ;Limpia pantalla 
+            mov al,03h
+                int 10h 
+         
+            mov ah, 09h          ;Mensaje de error
+	        mov dx, offset Msg8
+                int 21h  
+                
+            call salir 
+            
+        endm 
+       
+                
+        muestra macro al
+                            
+            aam                  ;ajusta el valor en AL por: 
+        
+            mov uni,al           ; Respaldo 4 en unidades
+            mov al,ah            ;muevo lo que tengo en AH a AL para poder volver
+                                 ; a separar los numeros
+            aam                  ; separa lo qe hay en AL
+            mov cen,ah           ;respaldo las centenas en cen en este caso 2
+                        
+            mov dece,al          ;respaldo las decenas en dec, en este caso 3
+            
+            mov ah, 09h
+        	lea dx, Msg7
+                int 21h            
+                        
+           ;Imprimimos los tres valores empezando por centenas, decenas y unidades.
+                     
+            mov ah,02h
+                        
+            mov dl,cen
+            add dl,30h           ; se suma 30h a dl para imprimir el numero real.
+                int 21h
+                        
+            mov dl,dece
+            add dl,30h
+                int 21h
+                        
+            mov dl,uni
+            add dl,30h
+                int 21h
+                    
+            call inicio          ;Vuelve al inicio del programa creando un ciclo
+         endm            
+
 ;SEGMENTO DEL PROGRAMA QUE LLAMA A LAS FUNCIONES Y REALIZA LAS ACTIVIDADES PRINCIPALES
         org 100h
         
